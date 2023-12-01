@@ -4,9 +4,17 @@ import './App.css';
 
 function App() {
   const [currentTime, setCurrentTime] = useState(0);
+  var timestamp = currentTime;
+
+// Convert Unix timestamp to milliseconds (JavaScript uses milliseconds, not seconds)
+  var date = new Date(timestamp * 1000);
+
+// Format the date as a string
+  var formattedTime = date.toISOString().slice(0, 19).replace("T", " ");
+
 
   useEffect(() => {
-    fetch('/time').then(res => res.json()).then(data => {
+    fetch('/api/time').then(res => res.json()).then(data => {
       setCurrentTime(data.time);
     });
   }, []);
@@ -25,7 +33,8 @@ function App() {
         >
           Learn React
         </a>
-        <p>The current time is {currentTime}.</p>
+        <p>The current time from Flask is : {currentTime} <br/><br/> and formated time is given below.</p>
+        <h1>{formattedTime}</h1>
       </header>
     </div>
   );
